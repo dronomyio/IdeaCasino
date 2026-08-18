@@ -1,0 +1,124 @@
+{
+  "version": "1.0",
+  "default_window_days": 90,
+  "previous_window_days": 90,
+  "input_policy": "Only claims in verified or manual_confirmed state contribute to a production metric snapshot. A snapshot stores its formula version, time window, raw input IDs, denominator guards, and calculated_at timestamp.",
+  "normalization": {
+    "factor_range": [0.01, 1.0],
+    "method": "Each factor is min-max normalized within its current market comparison set and clamped to 0.01–1.0. This prevents zero denominators while preserving the original multiplicative relationships.",
+    "no_data": "If a required factor has no verified observations, the metric status is insufficient_evidence rather than a numeric zero."
+  },
+  "metrics": {
+    "capital_deployed": {
+      "label": "Capital deployed",
+      "formula": "SUM(FundingRound.amount_usd) for verified rounds classified to the market during the window",
+      "unit": "USD",
+      "required_claim_types": ["funding_round"]
+    },
+    "round_count": {
+      "label": "Relevant rounds",
+      "formula": "COUNT(DISTINCT verified FundingRound) classified to the market during the window",
+      "unit": "count",
+      "required_claim_types": ["funding_round"]
+    },
+    "capital_velocity": {
+      "label": "Capital velocity",
+      "formula": "(capital_deployed_current_window - capital_deployed_previous_window) / MAX(capital_deployed_previous_window, denominator_floor_usd)",
+      "denominator_floor_usd": 1000000,
+      "unit": "percent_change",
+      "required_claim_types": ["funding_round"]
+    },
+    "active_builders": {
+      "label": "Active builders",
+      "formula": "COUNT(DISTINCT Builder) with a verified builder project, accelerator company, or product launch classified to the market during the window",
+      "unit": "count",
+      "required_claim_types": ["builder_project", "builder_company", "accelerator_cohort"]
+    },
+    "builder_velocity": {
+      "label": "Builder velocity",
+      "formula": "(active_builders_current_window - active_builders_previous_window) / MAX(active_builders_previous_window, 1)",
+      "unit": "percent_change",
+      "required_claim_types": ["builder_project", "builder_company", "accelerator_cohort"]
+    },
+    "capital_per_builder": {
+      "label": "Capital per Builder",
+      "formula": "capital_deployed_current_window / MAX(active_builders_current_window, 1)",
+      "unit": "USD_per_builder",
+      "required_metrics": ["capital_deployed", "active_builders"]
+    },
+    "buyer_demand": {
+      "label": "Buyer demand",
+      "formula": "WEIGHTED_COUNT(verified DemandEvent): job_posting=1, customer_adoption=3, procurement_event=5, contract_event=5; then normalized within the comparison set",
+      "unit": "normalized_factor",
+      "required_claim_types": ["job_posting", "customer_adoption", "procurement_event", "contract_event"]
+    },
+    "revenue_evidence": {
+      "label": "Revenue evidence",
+      "formula": "LOG1P(SUM(verified RevenueEvent.amount_usd) + SUM(verified contract_event.amount_usd)); then normalized within the comparison set",
+      "unit": "normalized_factor",
+      "required_claim_types": ["revenue_event", "contract_event"]
+    },
+    "builder_density": {
+      "label": "Builder density",
+      "formula": "active_builders_current_window / MAX(number_of_markets_in_theme, 1); then normalized within the comparison set",
+      "unit": "normalized_factor",
+      "required_metrics": ["active_builders"]
+    },
+    "competitive_intensity": {
+      "label": "Competitive intensity",
+      "formula": "COUNT(DISTINCT verified Company) classified to the market with a competitor, funding, product-launch, or vendor claim during the window; then normalized within the comparison set",
+      "unit": "normalized_factor",
+      "required_claim_types": ["competitor", "funding_round", "product_launch", "vendor"]
+    },
+    "opportunity_score": {
+      "label": "Original multiplicative Opportunity Score",
+      "formula": "100 * ((capital_momentum_factor * buyer_demand_factor * revenue_evidence_factor) / MAX(builder_density_factor * competitive_intensity_factor, 0.01))",
+      "unit": "score_0_to_100",
+      "required_metrics": ["capital_velocity", "buyer_demand", "revenue_evidence", "builder_density", "competitive_intensity"],
+      "post_process": "Clamp to 0–100 after percentile normalization of the raw quotient across the comparison set."
+    },
+    "picks_and_shovels_score": {
+      "label": "Picks & Shovels Score",
+      "formula": "100 * dependency_factor * adoption_factor * switching_cost_factor * monetization_factor",
+      "unit": "score_0_to_100",
+      "components": {
+        "dependency_factor": "Verified company-to-technology/pain dependencies weighted by the company's verified capital exposure.",
+        "adoption_factor": "Verified customer-adoption and builder-project events for the infrastructure capability.",
+        "switching_cost_factor": "Verified integration, regulatory, data, or operational lock-in evidence; manual review required for qualitative claims.",
+        "monetization_factor": "Verified contract, revenue, procurement, or usage-linked pricing evidence."
+      }
+    },
+    "pain_density": {
+      "label": "Pain Density",
+      "formula": "SUM over each verified company i of (capital_deployed_by_company_i * dependency_weight_i_pain)",
+      "unit": "USD_weighted_exposure",
+      "required_claim_types": ["funding_round", "technology_dependency", "pain_point"]
+    },
+    "pain_opportunity": {
+      "label": "Pain Opportunity",
+      "formula": "100 * ((pain_density_factor * customer_growth_factor * urgency_factor * budget_availability_factor) / MAX(existing_vendors_factor * builder_density_factor, 0.01))",
+      "unit": "score_0_to_100",
+      "required_metrics": ["pain_density", "buyer_demand", "builder_density", "competitive_intensity"],
+      "components": {
+        "customer_growth_factor": "Verified current-window buyer-demand events relative to previous window.",
+        "urgency_factor": "Verified time-sensitive, security, safety, compliance, or cost-of-failure evidence; review-required if inferred.",
+        "budget_availability_factor": "Verified procurement, contract, revenue, or explicit budget evidence.",
+        "existing_vendors_factor": "Count of verified vendors providing a solution, normalized within the comparison set."
+      },
+      "post_process": "Clamp to 0–100 after percentile normalization of the raw quotient across the pain-point comparison set."
+    },
+    "downstream_dollar": {
+      "label": "Downstream Dollar",
+      "formula": "SUM(verified company funding amount * verified or manual-confirmed spend-allocation coefficient for each dependency category)",
+      "unit": "USD_estimated_spend_exposure",
+      "required_claim_types": ["funding_round", "technology_dependency"],
+      "note": "Allocation coefficients must carry source or analyst-review provenance; the metric is an exposure estimate, not reported expenditure."
+    },
+    "house_edge": {
+      "label": "House Edge",
+      "formula": "100 * NORMALIZE(0.45 * builder_density + 0.35 * competitive_intensity + 0.20 * (1 - buyer_demand))",
+      "unit": "score_0_to_100",
+      "required_metrics": ["builder_density", "competitive_intensity", "buyer_demand"]
+    }
+  }
+}

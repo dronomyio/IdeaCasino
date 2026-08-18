@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "other": "OTHER",
+  "themes": {
+    "AI": {
+      "subcategories": {
+        "Agent Infrastructure": ["Agent orchestration", "Agent runtime", "Tool integration", "Memory systems"],
+        "AI Security": ["MCP security", "Agent security", "Prompt-injection defense", "Model security"],
+        "Developer Tools": ["AI coding", "Code review", "Developer workflow"],
+        "AI Infrastructure": ["Model serving", "Inference infrastructure", "Evaluation infrastructure", "Observability"],
+        "Physical AI": ["Warehouse automation", "Fleet operations", "Embodied AI", "Autonomous operations"]
+      }
+    },
+    "Fintech": {
+      "subcategories": {
+        "Payments": ["Payment orchestration", "Cross-border payments", "Merchant payments"],
+        "Stablecoins": ["Stablecoin settlement", "Treasury", "Wallet infrastructure"],
+        "Trading Infrastructure": ["Market data", "Execution", "Risk systems"]
+      }
+    },
+    "Robotics": {
+      "subcategories": {
+        "Humanoids": ["Humanoid operations", "Workplace automation"],
+        "Drones": ["Drone operations", "Aerial inspection"],
+        "Industrial Robotics": ["Warehouse automation", "Manufacturing automation"],
+        "Autonomous Systems": ["Autonomous navigation", "Fleet autonomy"]
+      }
+    }
+  },
+  "technologies": ["Vision Language Models", "Computer Vision", "Autonomous Systems", "Autonomous Navigation", "MCP", "LLM", "NVIDIA GPU", "Edge Inference", "Robotics Simulation", "Sensor Fusion", "Runtime Sandboxing", "Observability", "Evaluation"],
+  "pain_points": ["Robot perception", "Navigation", "Warehouse automation", "Warehouse labor", "Agent permissions", "Prompt injection", "Runtime sandboxing", "Safety validation", "Simulation", "Observability", "Compliance", "Sensor integration", "Fleet telemetry"],
+  "dependencies": ["Edge inference", "Robot observability", "Simulation", "Safety validation", "Sensors", "Runtime sandboxing", "Evaluation infrastructure", "Data infrastructure", "Compliance tooling", "Fleet telemetry"],
+  "buyer_types": ["Warehouses", "3PL companies", "Manufacturers", "Retail distribution centers", "Enterprise security teams", "Developers", "Financial institutions", "Government agencies"],
+  "event_types": ["funding_round", "builder_project", "job_posting", "procurement_event", "customer_adoption", "revenue_event", "outcome_event", "technology_dependency"],
+  "stages": ["Pre-Seed", "Seed", "Series A", "Series B", "Series C", "Series D", "Series E", "Series F", "Series G", "Series H", "Growth", "Strategic", "Venture"],
+  "relationship_types": {
+    "source_fact": ["USES", "NEEDS", "SERVES", "SOLVES", "CLASSIFIED_AS", "HAS_APPLICATION", "INVESTED_IN", "LED", "PARTNER_AT", "RAISED", "HAS_TECHNOLOGY"],
+    "model_inference": ["LIKELY_NEEDS", "LIKELY_SERVES", "LIKELY_SOLVES", "LIKELY_DEPENDS_ON", "OPPORTUNITY_FOR"]
+  }
+}

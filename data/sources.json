@@ -1,0 +1,125 @@
+{
+  "description": "Tavily domain-filtered discovery sources. Set enabled=false for sources you do not want queried. Use APIs/licensed feeds where required by a publisher.",
+  "sources": [
+    {
+      "name": "Y Combinator",
+      "url": "https://www.ycombinator.com/companies",
+      "domain": "ycombinator.com",
+      "type": "accelerator",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "site:ycombinator.com/companies 2026 startup AI security agent infrastructure robotics fintech",
+        "site:ycombinator.com launch funding seed startup 2026"
+      ]
+    },
+    {
+      "name": "Crunchbase News",
+      "url": "https://news.crunchbase.com/venture/",
+      "domain": "news.crunchbase.com",
+      "type": "funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup raises funding seed Series A Series B venture capital",
+        "AI security agent infrastructure robotics startup funding"
+      ]
+    },
+    {
+      "name": "TechCrunch Venture",
+      "url": "https://techcrunch.com/category/venture/",
+      "domain": "techcrunch.com",
+      "type": "funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup raises seed Series A Series B funding venture",
+        "AI startup funding cybersecurity robotics fintech"
+      ]
+    },
+    {
+      "name": "Reuters Technology",
+      "url": "https://www.reuters.com/technology/",
+      "domain": "reuters.com",
+      "type": "news",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup funding venture capital raises valuation technology",
+        "AI company raises funding investor venture"
+      ]
+    },
+    {
+      "name": "PitchBook",
+      "url": "https://pitchbook.com/news/venture-capital",
+      "domain": "pitchbook.com",
+      "type": "research",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "venture capital funding trends AI cybersecurity robotics fintech 2026",
+        "seed Series A venture funding 2026"
+      ]
+    },
+    {
+      "name": "NVCA Venture Monitor",
+      "url": "https://nvca.org/pitchbook-nvca-venture-monitor/",
+      "domain": "nvca.org",
+      "type": "research",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "venture monitor funding AI seed Series A 2026",
+        "venture capital deal activity 2026"
+      ]
+    },
+    {
+      "name": "Dealroom",
+      "url": "https://dealroom.co/",
+      "domain": "dealroom.co",
+      "type": "database-research",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup funding venture capital 2026 AI robotics cybersecurity fintech",
+        "venture capital trends funding rounds 2026"
+      ]
+    },
+    {
+      "name": "Fortune Term Sheet",
+      "url": "https://fortune.com/tag/term-sheet/",
+      "domain": "fortune.com",
+      "type": "funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": ["Term Sheet startup funding venture capital raises seed Series A Series B"]
+    },
+    {
+      "name": "Axios Pro Rata",
+      "url": "https://www.axios.com/newsletters/axios-pro-rata",
+      "domain": "axios.com",
+      "type": "funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": ["Pro Rata startup funding venture capital round seed Series A"]
+    },
+    {
+      "name": "VentureBeat",
+      "url": "https://venturebeat.com/",
+      "domain": "venturebeat.com",
+      "type": "technology-funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": ["AI startup raises funding venture capital seed Series A Series B"]
+    },
+    {
+      "name": "Sifted",
+      "url": "https://sifted.eu/",
+      "domain": "sifted.eu",
+      "type": "europe-funding-news",
+      "topic": "news",
+      "enabled": true,
+      "queries": ["startup funding seed Series A Series B venture capital Europe"]
+    }
+  ]
+}

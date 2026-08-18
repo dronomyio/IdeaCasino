@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "product": "Idea Casino",
+    "tagline": "See the odds before you build.",
+    "data_status": "Demonstration signal profiles",
+    "as_of": "2026-08-15",
+    "disclaimer": "Demonstration research interface only. Signal profiles and outputs are illustrative, not live market measurements, investment advice, or a recommendation to build, buy, sell, or fund anything."
+  },
+  "markets": [
+    {
+      "id": "mcp-security",
+      "name": "MCP Security",
+      "theme": "AI Economy · Trust",
+      "subcategory": "Agent & MCP Security",
+      "keywords": ["mcp", "model context protocol", "agent security", "runtime security", "prompt injection", "permissions"],
+      "capital": {"amount_usd": 180000000, "velocity_90d": 84, "rounds": 7, "active_vcs": 31},
+      "builders": {"active": 127, "velocity_90d": 21, "density": 39, "density_label": "Low–medium"},
+      "demand": {"score": 93, "revenue_evidence": 76, "evidence": "Security, governance, and procurement requirements are the strongest demand proxies in this profile."},
+      "competition": {"score": 36, "label": "Low", "funded_competitors": 14},
+      "infrastructure": {"score": 74, "dependency": "High", "adoption": "Growing", "switching_cost": "High", "monetization": "Clear"},
+      "smart_money": ["Sequoia · security / infrastructure", "Accel · enterprise software", "Khosla · frontier technology"],
+      "downstream_dollars": [{"name": "Runtime security", "share": 28}, {"name": "Identity & permissions", "share": 22}, {"name": "Evaluation & testing", "share": 18}, {"name": "Observability", "share": 17}, {"name": "Compliance", "share": 15}],
+      "pain_points": [
+        {"name": "Agent permission testing", "capital_exposed_usd": 145000000, "companies_affected": 36, "vendors": 7, "urgency": 91, "budget_availability": 86, "opportunity": 93},
+        {"name": "Runtime sandboxing", "capital_exposed_usd": 132000000, "companies_affected": 31, "vendors": 9, "urgency": 87, "budget_availability": 82, "opportunity": 89},
+        {"name": "MCP audit trails", "capital_exposed_usd": 118000000, "companies_affected": 29, "vendors": 11, "urgency": 82, "budget_availability": 79, "opportunity": 84},
+        {"name": "Security evaluation datasets", "capital_exposed_usd": 97000000, "companies_affected": 25, "vendors": 8, "urgency": 86, "budget_availability": 73, "opportunity": 86}
+      ]
+    },
+    {
+      "id": "agent-observability",
+      "name": "Agent Observability",
+      "theme": "AI Economy · Trust",
+      "subcategory": "Observability & Evaluation",
+      "keywords": ["agent observability", "telemetry", "tracing", "evaluation", "monitoring", "llmops"],
+      "capital": {"amount_usd": 900000000, "velocity_90d": 48, "rounds": 13, "active_vcs": 44},
+      "builders": {"active": 350, "velocity_90d": 33, "density": 49, "density_label": "Moderate"},
+      "demand": {"score": 90, "revenue_evidence": 74, "evidence": "Enterprise requirements for reliability, traceability, and evaluation are rising in the profile."},
+      "competition": {"score": 51, "label": "Medium", "funded_competitors": 27},
+      "infrastructure": {"score": 94, "dependency": "Very high", "adoption": "Broad", "switching_cost": "Moderate", "monetization": "Usage-linked"},
+      "smart_money": ["Benchmark · AI infrastructure", "Insight · data platforms", "a16z · developer tools"],
+      "downstream_dollars": [{"name": "Telemetry & tracing", "share": 30}, {"name": "Evaluation", "share": 24}, {"name": "Data infrastructure", "share": 20}, {"name": "Security", "share": 14}, {"name": "Cost optimization", "share": 12}],
+      "pain_points": [
+        {"name": "Production agent tracing", "capital_exposed_usd": 680000000, "companies_affected": 82, "vendors": 19, "urgency": 89, "budget_availability": 88, "opportunity": 88},
+        {"name": "Agent reliability evaluation", "capital_exposed_usd": 610000000, "companies_affected": 76, "vendors": 16, "urgency": 87, "budget_availability": 83, "opportunity": 90},
+        {"name": "AI incident response", "capital_exposed_usd": 490000000, "companies_affected": 61, "vendors": 12, "urgency": 82, "budget_availability": 79, "opportunity": 87},
+        {"name": "Inference cost attribution", "capital_exposed_usd": 570000000, "companies_affected": 72, "vendors": 22, "urgency": 75, "budget_availability": 82, "opportunity": 75}
+      ]
+    },
+    {
+      "id": "physical-ai-infrastructure",
+      "name": "Physical AI Infrastructure",
+      "theme": "AI Economy · Apply",
+      "subcategory": "Robotics & Autonomy",
+      "keywords": ["robotics", "physical ai", "humanoid", "robot security", "simulation", "fleet", "sensors"],
+      "capital": {"amount_usd": 2800000000, "velocity_90d": 81, "rounds": 19, "active_vcs": 52},
+      "builders": {"active": 190, "velocity_90d": 24, "density": 35, "density_label": "Low"},
+      "demand": {"score": 91, "revenue_evidence": 81, "evidence": "Automation budgets, pilot deployments, and integration requirements are the leading demand proxies."},
+      "competition": {"score": 42, "label": "Low–medium", "funded_competitors": 22},
+      "infrastructure": {"score": 79, "dependency": "High", "adoption": "Growing", "switching_cost": "High", "monetization": "Enterprise contract"},
+      "smart_money": ["General Catalyst · industrial transformation", "Eclipse · industrial technology", "Lux · deep technology"],
+      "downstream_dollars": [{"name": "Simulation & validation", "share": 23}, {"name": "Edge compute", "share": 21}, {"name": "Sensor integration", "share": 19}, {"name": "Fleet telemetry", "share": 19}, {"name": "Security & safety", "share": 18}],
+      "pain_points": [
+        {"name": "Robot security", "capital_exposed_usd": 3700000000, "companies_affected": 71, "vendors": 8, "urgency": 92, "budget_availability": 84, "opportunity": 91},
+        {"name": "Safety validation", "capital_exposed_usd": 4200000000, "companies_affected": 83, "vendors": 19, "urgency": 91, "budget_availability": 88, "opportunity": 84},
+        {"name": "Sensor integration", "capital_exposed_usd": 2800000000, "companies_affected": 61, "vendors": 12, "urgency": 84, "budget_availability": 81, "opportunity": 83},
+        {"name": "Fleet observability", "capital_exposed_usd": 5100000000, "companies_affected": 94, "vendors": 24, "urgency": 88, "budget_availability": 86, "opportunity": 78},
+        {"name": "Deployment orchestration", "capital_exposed_usd": 4900000000, "companies_affected": 88, "vendors": 31, "urgency": 76, "budget_availability": 78, "opportunity": 62}
+      ]
+    },
+    {
+      "id": "ai-coding-agents",
+      "name": "AI Coding Agents",
+      "theme": "AI Economy · Build",
+      "subcategory": "Developer Tools",
+      "keywords": ["ai coding", "coding agent", "code generation", "developer tools", "software engineering"],
+      "capital": {"amount_usd": 3200000000, "velocity_90d": 41, "rounds": 24, "active_vcs": 62},
+      "builders": {"active": 2800, "velocity_90d": 146, "density": 92, "density_label": "Extreme"},
+      "demand": {"score": 72, "revenue_evidence": 58, "evidence": "Adoption is high, but the profile shows variable willingness to pay and strong platform competition."},
+      "competition": {"score": 95, "label": "Extreme", "funded_competitors": 126},
+      "infrastructure": {"score": 63, "dependency": "High", "adoption": "Broad", "switching_cost": "Low", "monetization": "Mixed"},
+      "smart_money": ["a16z · developer tools", "Thrive · growth software", "Index · application software"],
+      "downstream_dollars": [{"name": "Code verification", "share": 25}, {"name": "Model inference", "share": 24}, {"name": "Security testing", "share": 19}, {"name": "Sandboxing", "share": 17}, {"name": "Observability", "share": 15}],
+      "pain_points": [
+        {"name": "Generated-code verification", "capital_exposed_usd": 2100000000, "companies_affected": 188, "vendors": 29, "urgency": 89, "budget_availability": 84, "opportunity": 78},
+        {"name": "Secure code execution", "capital_exposed_usd": 1900000000, "companies_affected": 165, "vendors": 24, "urgency": 86, "budget_availability": 82, "opportunity": 80},
+        {"name": "Repository-aware evaluation", "capital_exposed_usd": 1500000000, "companies_affected": 142, "vendors": 31, "urgency": 76, "budget_availability": 74, "opportunity": 65}
+      ]
+    },
+    {
+      "id": "ai-sdr-agents",
+      "name": "AI SDR Agents",
+      "theme": "AI Economy · Apply",
+      "subcategory": "Revenue Automation",
+      "keywords": ["sdr", "sales agent", "outbound", "revenue automation", "prospecting"],
+      "capital": {"amount_usd": 1100000000, "velocity_90d": 17, "rounds": 18, "active_vcs": 46},
+      "builders": {"active": 4000, "velocity_90d": 151, "density": 96, "density_label": "Extreme"},
+      "demand": {"score": 55, "revenue_evidence": 46, "evidence": "Interest is visible, but the profile shows crowded positioning and uncertain durability of spend."},
+      "competition": {"score": 97, "label": "Extreme", "funded_competitors": 169},
+      "infrastructure": {"score": 47, "dependency": "Moderate", "adoption": "Mixed", "switching_cost": "Low", "monetization": "Crowded"},
+      "smart_money": ["SaaStr ecosystem · GTM software", "Craft · sales technology", "First Round · early-stage SaaS"],
+      "downstream_dollars": [{"name": "Voice & deliverability", "share": 27}, {"name": "Compliance", "share": 24}, {"name": "Data enrichment", "share": 22}, {"name": "Evaluation", "share": 16}, {"name": "Fraud prevention", "share": 11}],
+      "pain_points": [
+        {"name": "Voice consent compliance", "capital_exposed_usd": 730000000, "companies_affected": 105, "vendors": 15, "urgency": 86, "budget_availability": 75, "opportunity": 82},
+        {"name": "Outbound fraud detection", "capital_exposed_usd": 670000000, "companies_affected": 94, "vendors": 19, "urgency": 81, "budget_availability": 72, "opportunity": 74},
+        {"name": "Sales-agent evaluation", "capital_exposed_usd": 590000000, "companies_affected": 88, "vendors": 28, "urgency": 71, "budget_availability": 66, "opportunity": 57}
+      ]
+    },
+    {
+      "id": "stablecoin-infrastructure",
+      "name": "Stablecoin Infrastructure",
+      "theme": "AI Economy · Monetize",
+      "subcategory": "Payments & Settlement",
+      "keywords": ["stablecoin", "payments", "settlement", "wallet", "routing", "treasury"],
+      "capital": {"amount_usd": 1400000000, "velocity_90d": 37, "rounds": 16, "active_vcs": 38},
+      "builders": {"active": 250, "velocity_90d": 27, "density": 52, "density_label": "Moderate"},
+      "demand": {"score": 83, "revenue_evidence": 79, "evidence": "Payment-routing, treasury, and settlement use cases create measurable budget-holder signals in the profile."},
+      "competition": {"score": 58, "label": "Medium", "funded_competitors": 43},
+      "infrastructure": {"score": 87, "dependency": "High", "adoption": "Growing", "switching_cost": "High", "monetization": "Transaction-linked"},
+      "smart_money": ["Haun · crypto infrastructure", "Ribbit · fintech", "Paradigm · protocols"],
+      "downstream_dollars": [{"name": "Compliance", "share": 26}, {"name": "Liquidity & routing", "share": 25}, {"name": "Wallet infrastructure", "share": 20}, {"name": "Risk monitoring", "share": 16}, {"name": "Developer APIs", "share": 13}],
+      "pain_points": [
+        {"name": "Treasury routing intelligence", "capital_exposed_usd": 980000000, "companies_affected": 52, "vendors": 13, "urgency": 83, "budget_availability": 84, "opportunity": 85},
+        {"name": "Compliance automation", "capital_exposed_usd": 1100000000, "companies_affected": 59, "vendors": 18, "urgency": 91, "budget_availability": 89, "opportunity": 84},
+        {"name": "Transaction-risk monitoring", "capital_exposed_usd": 810000000, "companies_affected": 47, "vendors": 17, "urgency": 86, "budget_availability": 80, "opportunity": 80}
+      ]
+    },
+    {
+      "id": "voice-agent-compliance",
+      "name": "Voice Agent Compliance",
+      "theme": "AI Economy · Trust",
+      "subcategory": "Voice AI Safety",
+      "keywords": ["voice agents", "voice ai", "compliance", "voice security", "audio provenance", "call automation"],
+      "capital": {"amount_usd": 640000000, "velocity_90d": 45, "rounds": 11, "active_vcs": 29},
+      "builders": {"active": 420, "velocity_90d": 32, "density": 63, "density_label": "Medium–high"},
+      "demand": {"score": 66, "revenue_evidence": 60, "evidence": "Compliance, abuse prevention, and contact-centre governance are the clearest demand indicators in the profile."},
+      "competition": {"score": 67, "label": "Medium–high", "funded_competitors": 38},
+      "infrastructure": {"score": 76, "dependency": "High", "adoption": "Emerging", "switching_cost": "Moderate", "monetization": "Compliance budget"},
+      "smart_money": ["Susa · applied AI", "Felicis · enterprise software", "Uncork · customer experience"],
+      "downstream_dollars": [{"name": "Consent & compliance", "share": 29}, {"name": "Fraud & abuse detection", "share": 23}, {"name": "Audio provenance", "share": 18}, {"name": "Latency monitoring", "share": 16}, {"name": "Agent evaluation", "share": 14}],
+      "pain_points": [
+        {"name": "Voice consent controls", "capital_exposed_usd": 460000000, "companies_affected": 42, "vendors": 9, "urgency": 89, "budget_availability": 74, "opportunity": 86},
+        {"name": "Synthetic-voice fraud detection", "capital_exposed_usd": 420000000, "companies_affected": 39, "vendors": 14, "urgency": 91, "budget_availability": 73, "opportunity": 84},
+        {"name": "Audio provenance", "capital_exposed_usd": 390000000, "companies_affected": 35, "vendors": 16, "urgency": 77, "budget_availability": 65, "opportunity": 73}
+      ]
+    }
+  ]
+}

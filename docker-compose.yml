@@ -1,0 +1,38 @@
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-change-me-now}
+      NEO4J_PLUGINS: '[]'
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+
+  app:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - neo4j
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      - ./data:/app/data
+
+  mcp:
+    build: .
+    profiles: ["mcp"]
+    env_file:
+      - .env
+    depends_on:
+      - neo4j
+    command: ["python", "-m", "app.mcp_server"]
+    stdin_open: true
+    tty: false
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  neo4j_data:

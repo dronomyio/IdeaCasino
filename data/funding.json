@@ -1,0 +1,14 @@
+[
+  {
+    "company":"Example Security AI",
+    "amount_usd":12000000,
+    "round":"Series A",
+    "stage":"Series A",
+    "date":"2026-08-01",
+    "theme":"AI",
+    "subcategory":"AI Security",
+    "ontology":["AI","AI Security","Agent Security"],
+    "investors":[{"firm":"Example Ventures","partner":"A. Partner","role":"lead"}],
+    "news":[{"title":"Example Security AI raises $12M","source":"Example","url":"https://example.com/article"}]
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "github": {
+    "enabled": true,
+    "source": "github_rest",
+    "description": "Builder-flow evidence from public repositories, repository metadata, and recent activity.",
+    "searches": [
+      {"id": "mcp-security", "market_id": "mcp-security", "query": "topic:mcp security in:name,description,readme archived:false fork:false", "sort": "updated", "order": "desc"},
+      {"id": "agent-observability", "market_id": "agent-observability", "query": "agent observability evaluation llm in:name,description,readme archived:false fork:false", "sort": "updated", "order": "desc"},
+      {"id": "physical-ai", "market_id": "physical-ai-infrastructure", "query": "robotics simulation autonomous in:name,description,readme archived:false fork:false", "sort": "updated", "order": "desc"},
+      {"id": "voice-agents", "market_id": "voice-agent-compliance", "query": "voice agent audio security in:name,description,readme archived:false fork:false", "sort": "updated", "order": "desc"},
+      {"id": "stablecoin", "market_id": "stablecoin-infrastructure", "query": "stablecoin payment settlement in:name,description,readme archived:false fork:false", "sort": "updated", "order": "desc"}
+    ],
+    "claim_types": ["builder_project", "technology_adoption", "company_classification"],
+    "metrics": ["stars", "forks", "open_issues", "subscribers", "watchers", "language", "topics", "created_at", "pushed_at", "updated_at", "recent_commit_count", "contributor_count"]
+  },
+  "sec_edgar": {
+    "enabled": true,
+    "source": "sec_edgar",
+    "description": "Capital-flow and financial evidence from SEC EDGAR submissions and company facts. Form D review is supported where the configured filing index exposes the record.",
+    "form_types": ["D", "8-K", "10-K", "10-Q", "S-1", "F-1"],
+    "targets": [],
+    "target_contract": {
+      "cik": "10-digit CIK, with leading zeroes",
+      "market_id": "Idea Casino market identifier",
+      "company": "Optional display name override"
+    },
+    "claim_types": ["sec_filing", "funding_round", "revenue_event", "outcome_event", "company_classification"],
+    "notes": "Add explicit CIK-to-market targets after an entity has been classified. SEC filings are evidence records, not automatic funding-round truth."
+  }
+}

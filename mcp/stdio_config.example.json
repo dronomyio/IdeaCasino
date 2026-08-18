@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "idea-casino": {
+      "command": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "/absolute/path/to/vcflow_app/docker-compose.yml",
+        "--profile",
+        "mcp",
+        "run",
+        "--rm",
+        "-T",
+        "mcp"
+      ]
+    }
+  }
+}

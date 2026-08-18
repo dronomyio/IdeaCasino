@@ -1,0 +1,68 @@
+version: 2.1
+
+parameters:
+  run_collection:
+    type: boolean
+    default: false
+
+jobs:
+  validate:
+    docker:
+      - image: cimg/python:3.12
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Install application dependencies
+          command: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+      - run:
+          name: Validate Python modules
+          command: python -m compileall -q app scripts
+      - run:
+          name: Validate data contracts
+          command: |
+            python - <<'PY'
+            import json
+            from pathlib import Path
+            root = Path('data')
+            for filename in ('search_criteria.json', 'direct_api_criteria.json', 'idea_query_policy.json', 'ontology_taxonomy.json', 'ontology_schema.json', 'calculation_definitions.json'):
+                json.loads((root / filename).read_text())
+            print('Data contracts are valid JSON.')
+            PY
+      - run:
+          name: Run staged evidence-pipeline smoke test
+          command: PYTHONPATH=. python scripts/smoke_staged_pipeline.py
+      - run:
+          name: Run Core Intelligence and MCP smoke tests
+          command: PYTHONPATH=. python scripts/smoke_core_mcp.py && PYTHONPATH=. python scripts/smoke_mcp_server.py
+
+  unified-collection:
+    docker:
+      - image: cimg/python:3.12
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Install application dependencies
+          command: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+      - run:
+          name: Run unified Tavily, GitHub, SEC EDGAR, LLM, metrics, and graph pipeline
+          command: python scripts/run_pipeline.py --strict
+      - store_artifacts:
+          path: data/pipeline_reports.json
+          destination: pipeline-reports
+      - store_artifacts:
+          path: data/collection_runs.json
+          destination: collection-runs
+
+workflows:
+  validate-on-change:
+    jobs:
+      - validate
+
+  scheduled-or-manual-collection:
+    when: << pipeline.parameters.run_collection >>
+    jobs:
+      - unified-collection:
+          context:
+            - idea-casino-collection

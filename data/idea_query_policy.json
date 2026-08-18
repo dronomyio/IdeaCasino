@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "default_mode": "local_first",
+  "modes": {
+    "local_only": "Use only saved evidence, verified claims, graph relationships, and metric snapshots. Never call an external API.",
+    "local_first": "Inspect local evidence first. Trigger fresh research only when verified coverage is insufficient or relevant evidence is older than the configured threshold.",
+    "live_refresh": "Inspect local evidence first, then always perform bounded fresh web and builder research before synthesis."
+  },
+  "freshness": {
+    "verified_evidence_max_age_days": 30,
+    "unverified_signal_max_age_days": 14,
+    "market_metric_max_age_days": 30,
+    "minimum_verified_claims": 4,
+    "minimum_signal_types": 2,
+    "required_signal_types": ["capital", "builder", "demand"]
+  },
+  "external_research": {
+    "enabled_modes": ["local_first", "live_refresh"],
+    "max_tavily_queries": 3,
+    "max_github_queries": 2,
+    "max_results_per_query": 5,
+    "allow_sec_refresh": false,
+    "note": "SEC EDGAR retrieval is CIK-targeted and is not automatically run for an unclassified idea."
+  },
+  "evidence_boundary": {
+    "facts": "Only source-backed evidence records and verified/manual-confirmed claims may be presented as facts or used in calculations.",
+    "new_external_results": "Freshly retrieved results are labelled unverified until a reviewer confirms their claims.",
+    "model_knowledge": "The LLM may reason over retrieved context but its unstated background knowledge is never presented as Idea Casino evidence.",
+    "calculations": "Metric values are produced by the deterministic calculation engine, not the LLM."
+  },
+  "response_sections": ["query_interpretation", "evidence_coverage", "market_signals", "fresh_research", "opportunity_hypotheses", "uncertainties", "sources"]
+}

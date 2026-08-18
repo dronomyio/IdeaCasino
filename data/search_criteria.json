@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "collection_defaults": {
+    "search_depth": "basic",
+    "max_results": 10,
+    "chunks_per_source": 3,
+    "include_raw_content": "markdown",
+    "include_usage": true,
+    "time_range": "month",
+    "min_relevance_score": 0.45,
+    "max_retries": 3,
+    "backoff_seconds": 2
+  },
+  "criteria": [
+    {
+      "id": "funding_rounds",
+      "name": "Funding rounds",
+      "signal_type": "capital",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup raises funding seed Series A Series B venture capital AI security agents robotics stablecoin",
+        "startup funding round led by investor AI infrastructure developer tools physical AI",
+        "company announces financing capital raise enterprise AI security infrastructure"
+      ],
+      "include_domains": ["techcrunch.com", "news.crunchbase.com", "reuters.com", "venturebeat.com", "sifted.eu", "dealroom.co", "pitchbook.com", "ycombinator.com"],
+      "claim_types": ["funding_round", "company_classification", "investor_participation", "partner_participation"]
+    },
+    {
+      "id": "investor_partner_activity",
+      "name": "Investor and partner activity",
+      "signal_type": "capital",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "venture partner led investment AI security agent infrastructure robotics",
+        "venture capital investment partner joined board seed Series A artificial intelligence",
+        "investor portfolio AI infrastructure security robotics funding"
+      ],
+      "include_domains": ["techcrunch.com", "news.crunchbase.com", "reuters.com", "pitchbook.com", "vcfirm.co"],
+      "claim_types": ["investor_participation", "partner_participation", "portfolio_exposure"]
+    },
+    {
+      "id": "github_builder_projects",
+      "name": "GitHub builder projects",
+      "signal_type": "builder",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "site:github.com AI agent security MCP repository released",
+        "site:github.com robotics simulation autonomous software repository",
+        "site:github.com LLM observability evaluation framework repository"
+      ],
+      "include_domains": ["github.com"],
+      "claim_types": ["builder_project", "technology_adoption", "company_classification"]
+    },
+    {
+      "id": "accelerator_builder_cohorts",
+      "name": "Accelerator and builder cohorts",
+      "signal_type": "builder",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "Y Combinator batch AI security agent infrastructure robotics companies",
+        "accelerator cohort AI infrastructure evaluation observability startups",
+        "startup accelerator demo day physical AI robotics agent security"
+      ],
+      "include_domains": ["ycombinator.com", "techstars.com", "500.co", "alchemistaccelerator.com"],
+      "claim_types": ["builder_company", "accelerator_cohort", "company_classification"]
+    },
+    {
+      "id": "product_launches",
+      "name": "Product and company launches",
+      "signal_type": "builder",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "new product launch AI security MCP agents Product Hunt",
+        "new startup launch AI agent observability evaluation developer tools",
+        "new robotics infrastructure company launch simulation fleet telemetry"
+      ],
+      "include_domains": ["producthunt.com", "github.com", "ycombinator.com"],
+      "claim_types": ["builder_company", "product_launch", "company_classification"]
+    },
+    {
+      "id": "enterprise_hiring",
+      "name": "Enterprise hiring demand",
+      "signal_type": "demand",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "jobs AI security engineer agent governance MCP security",
+        "jobs robotics simulation fleet management autonomous systems",
+        "jobs LLM observability evaluation platform enterprise"
+      ],
+      "include_domains": ["linkedin.com", "greenhouse.io", "lever.co", "ashbyhq.com"],
+      "claim_types": ["job_posting", "buyer_demand", "technology_adoption"]
+    },
+    {
+      "id": "procurement_and_rfps",
+      "name": "Procurement and RFP demand",
+      "signal_type": "demand",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "RFP AI security agent governance procurement",
+        "procurement robotics simulation safety validation RFP",
+        "enterprise request for proposal LLM observability evaluation"
+      ],
+      "include_domains": ["sam.gov", "gov.uk", "ted.europa.eu", "bonfirehub.com", "bidnetdirect.com"],
+      "claim_types": ["procurement_event", "buyer_demand", "budget_evidence"]
+    },
+    {
+      "id": "customer_adoption",
+      "name": "Customer adoption and case studies",
+      "signal_type": "demand",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "enterprise customer case study AI security agent platform",
+        "company adopts agent observability evaluation infrastructure customer",
+        "robotics company deployment customer announcement fleet telemetry"
+      ],
+      "include_domains": ["businesswire.com", "prnewswire.com", "venturebeat.com", "techcrunch.com", "reuters.com"],
+      "claim_types": ["customer_adoption", "buyer_demand", "technology_adoption"]
+    },
+    {
+      "id": "revenue_and_traction",
+      "name": "Revenue and traction evidence",
+      "signal_type": "revenue",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "startup ARR revenue customer growth AI security infrastructure",
+        "enterprise AI company revenue run rate customer traction announcement",
+        "robotics startup contract revenue deployment announcement"
+      ],
+      "include_domains": ["techcrunch.com", "news.crunchbase.com", "reuters.com", "businesswire.com", "prnewswire.com"],
+      "claim_types": ["revenue_event", "contract_event", "customer_adoption"]
+    },
+    {
+      "id": "outcomes",
+      "name": "Company outcomes",
+      "signal_type": "outcome",
+      "topic": "news",
+      "enabled": true,
+      "queries": [
+        "AI startup acquired acquisition IPO shutdown robotics security infrastructure",
+        "company acquisition exit AI agent security observability",
+        "robotics startup bankruptcy shutdown acquisition funding outcome"
+      ],
+      "include_domains": ["reuters.com", "techcrunch.com", "news.crunchbase.com", "pitchbook.com", "sec.gov"],
+      "claim_types": ["outcome_event", "acquisition", "ipo", "shutdown"]
+    },
+    {
+      "id": "technical_dependencies",
+      "name": "Technology dependencies and pains",
+      "signal_type": "pain",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "AI agent security runtime sandboxing permissions evaluation observability requirements",
+        "robotics simulation safety validation sensor integration fleet telemetry requirements",
+        "stablecoin infrastructure compliance routing risk monitoring requirements"
+      ],
+      "include_domains": ["github.com", "docs.anthropic.com", "modelcontextprotocol.io", "nvidia.com", "cloud.google.com", "aws.amazon.com", "learn.microsoft.com"],
+      "claim_types": ["technology_dependency", "pain_point", "capability_requirement"]
+    },
+    {
+      "id": "vendor_and_competitor_landscape",
+      "name": "Vendors and competitors",
+      "signal_type": "competition",
+      "topic": "general",
+      "enabled": true,
+      "queries": [
+        "AI agent security vendors competitors MCP security platform",
+        "agent observability evaluation vendors competitors",
+        "robotics simulation safety validation vendors competitors"
+      ],
+      "include_domains": ["g2.com", "gartner.com", "github.com", "techcrunch.com", "venturebeat.com"],
+      "claim_types": ["vendor", "competitor", "company_classification"]
+    }
+  ]
+}
