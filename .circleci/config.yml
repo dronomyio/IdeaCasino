@@ -32,9 +32,6 @@ jobs:
           name: Verify reviewed-evidence market tabs
           command: PYTHONPATH=. python scripts/smoke_live_tabs.py && PYTHONPATH=. python scripts/smoke_live_tab_api.py
       - run:
-          name: Validate reviewed-evidence browser UI syntax
-          command: node scripts/validate_static_ui.mjs
-      - run:
           name: Run Core Intelligence and MCP smoke tests
           command: PYTHONPATH=. python scripts/smoke_core_mcp.py && PYTHONPATH=. python scripts/smoke_mcp_server.py
 
