@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import time
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -45,6 +46,11 @@ def normalize_cik(value: str | int) -> str:
     if not raw or len(raw) > 10:
         raise ValueError("SEC CIK must contain between one and ten digits.")
     return raw.zfill(10)
+
+
+def normalized_entity_name(value: str | None) -> str:
+    """Normalize an SEC entity name for conservative CIK matching."""
+    return re.sub(r"[^a-z0-9]+", " ", str(value or "").lower()).strip()
 
 
 def date_or_none(value: str | None) -> datetime | None:
@@ -215,13 +221,77 @@ class DirectCollectors:
         user_agent = os.getenv("SEC_USER_AGENT", "").strip()
         if not user_agent or "YOUR_COMPANY" in user_agent or "your-email" in user_agent.lower():
             raise RuntimeError("SEC_USER_AGENT must identify your organization and a contact email before SEC collection runs.")
-        return {"User-Agent": user_agent, "Accept-Encoding": "gzip, deflate", "Host": "data.sec.gov"}
+        # Let requests derive Host from each official SEC URL.  The collector uses both
+        # data.sec.gov and www.sec.gov/files, whose host names differ.
+        return {"User-Agent": user_agent, "Accept-Encoding": "gzip, deflate"}
 
     def _sec_get(self, url: str) -> dict[str, Any]:
         response = requests.get(url, headers=self._sec_headers(), timeout=self.timeout)
         response.raise_for_status()
         time.sleep(float(os.getenv("SEC_REQUEST_DELAY_SECONDS", "0.12")))
         return response.json()
+
+    def resolve_cik(self, company: str, ticker: str | None = None, limit: int = 10) -> dict[str, Any]:
+        """Resolve a public filer conservatively against the SEC's official ticker map.
+
+        A result is auto-selected only for an exact ticker or exact normalized company
+        name. Partial-name results are returned for a human to choose; no guess becomes
+        a collection target.
+        """
+        company_key = normalized_entity_name(company)
+        ticker_key = str(ticker or "").strip().upper()
+        if not company_key and not ticker_key:
+            raise ValueError("Provide a company name or ticker for SEC CIK resolution.")
+        source_url = os.getenv("SEC_COMPANY_TICKERS_URL", "https://www.sec.gov/files/company_tickers.json")
+        payload = self._sec_get(source_url)
+        records = payload.values() if isinstance(payload, dict) else payload
+        matches: list[dict[str, Any]] = []
+        for row in records:
+            if not isinstance(row, dict) or row.get("cik_str") is None:
+                continue
+            title = str(row.get("title") or "").strip()
+            row_ticker = str(row.get("ticker") or "").strip().upper()
+            title_key = normalized_entity_name(title)
+            match_kind: str | None = None
+            if ticker_key and row_ticker == ticker_key:
+                match_kind = "exact_ticker"
+            elif company_key and title_key == company_key:
+                match_kind = "exact_company_name"
+            elif company_key and title_key.startswith(company_key):
+                match_kind = "company_name_prefix"
+            elif company_key and all(token in title_key.split() for token in company_key.split()):
+                match_kind = "company_name_tokens"
+            if match_kind:
+                matches.append({
+                    "cik": normalize_cik(row["cik_str"]),
+                    "company": title,
+                    "ticker": row_ticker or None,
+                    "match_kind": match_kind,
+                    "source_url": source_url,
+                })
+        priority = {"exact_ticker": 0, "exact_company_name": 1, "company_name_prefix": 2, "company_name_tokens": 3}
+        matches.sort(key=lambda item: (priority[item["match_kind"]], item["company"]))
+        matches = matches[: max(1, min(int(limit), 25))]
+        selected = matches[0] if matches and matches[0]["match_kind"] in {"exact_ticker", "exact_company_name"} else None
+        return {
+            "query": {"company": company or None, "ticker": ticker_key or None},
+            "source": {"name": "SEC company_tickers.json", "url": source_url},
+            "selected": selected,
+            "matches": matches,
+            "requires_confirmation": selected is None,
+            "note": "Only exact ticker or exact normalized company-name matches are selected automatically; partial matches require operator confirmation.",
+        }
+
+    def _resolve_sec_target(self, target: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any] | None]:
+        """Fill a target CIK only when the official SEC mapping has an exact match."""
+        if target.get("cik"):
+            resolved = {**target, "cik": normalize_cik(target["cik"])}
+            return resolved, None
+        resolution = self.resolve_cik(str(target.get("company") or ""), target.get("ticker"))
+        selected = resolution.get("selected")
+        if not selected:
+            raise ValueError("No exact SEC CIK match. Provide an explicit CIK or choose one of the returned matches before collection.")
+        return {**target, "cik": selected["cik"], "company": target.get("company") or selected["company"]}, resolution
 
     @staticmethod
     def _recent_filings(submissions: dict[str, Any]) -> list[dict[str, Any]]:
@@ -268,9 +338,13 @@ class DirectCollectors:
         allowed_forms = set(section.get("form_types", []))
         lookback = timedelta(days=int(os.getenv("SEC_LOOKBACK_DAYS", "365")))
         cutoff = datetime.now(timezone.utc) - lookback
-        for target in configured_targets:
-            query_log = {"criterion_id": "sec_edgar", "target": target, "started_at": utc_now()}
+        for original_target in configured_targets:
+            target = original_target
+            query_log = {"criterion_id": "sec_edgar", "target": original_target, "started_at": utc_now()}
             try:
+                target, resolution = self._resolve_sec_target(original_target)
+                if resolution:
+                    query_log["cik_resolution"] = resolution
                 cik = normalize_cik(target.get("cik", ""))
                 submissions_url = f"https://data.sec.gov/submissions/CIK{cik}.json"
                 submissions = self._sec_get(submissions_url)

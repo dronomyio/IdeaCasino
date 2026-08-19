@@ -32,6 +32,9 @@ jobs:
           name: Verify reviewed-evidence market tabs
           command: PYTHONPATH=. python scripts/smoke_live_tabs.py && PYTHONPATH=. python scripts/smoke_live_tab_api.py
       - run:
+          name: Verify SEC CIK resolution and curated VC universe
+          command: PYTHONPATH=. python scripts/smoke_sec_cik_resolution.py && PYTHONPATH=. python scripts/smoke_sec_cik_api.py && PYTHONPATH=. python scripts/smoke_vc_universe.py
+      - run:
           name: Run Core Intelligence and MCP smoke tests
           command: PYTHONPATH=. python scripts/smoke_core_mcp.py && PYTHONPATH=. python scripts/smoke_mcp_server.py
 
