@@ -20,15 +20,8 @@ jobs:
           command: python -m compileall -q app scripts
       - run:
           name: Validate data contracts
-          command: |
-            python - <<'PY'
-            import json
-            from pathlib import Path
-            root = Path('data')
-            for filename in ('search_criteria.json', 'direct_api_criteria.json', 'idea_query_policy.json', 'ontology_taxonomy.json', 'ontology_schema.json', 'calculation_definitions.json'):
-                json.loads((root / filename).read_text())
-            print('Data contracts are valid JSON.')
-            PY
+          command: >
+            python -c "import json; from pathlib import Path; root = Path('data'); filenames = ('search_criteria.json', 'direct_api_criteria.json', 'idea_query_policy.json', 'ontology_taxonomy.json', 'ontology_schema.json', 'calculation_definitions.json'); [json.loads((root / filename).read_text()) for filename in filenames]; print('Data contracts are valid JSON.')"
       - run:
           name: Run staged evidence-pipeline smoke test
           command: PYTHONPATH=. python scripts/smoke_staged_pipeline.py
