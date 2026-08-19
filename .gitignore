@@ -1,1 +1,11 @@
 .env
+__pycache__/
+*.py[cod]
+
+# Local runtime evidence and collection artifacts; retain only schema and bundled seed data in Git.
+data/claims.json
+data/collection_runs.json
+data/evidence.json
+data/tavily_evidence_raw.json
+data/direct_api_raw.json
+data/metric_snapshots.json
