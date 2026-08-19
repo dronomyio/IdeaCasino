@@ -14,6 +14,7 @@ from .graph import GraphWriter
 from .idea_research import get_idea_research
 from .llm_enrichment import get_llm_enricher
 from .live_projection import get_live_market_projection
+from .live_tabs import get_live_tab_projection
 from .validator import get_candidate_validator
 from .market import get_market_intelligence
 from .metrics_engine import get_metrics_engine
@@ -94,6 +95,36 @@ def dashboard():
 def live_dashboard():
     """Landing-page projection using reviewed evidence and computed metrics only."""
     return get_live_market_projection().dashboard()
+
+
+@app.get("/api/live-markets")
+def live_markets():
+    """Market-table payload using reviewed evidence and deterministic snapshots only."""
+    return get_live_tab_projection().markets()
+
+
+@app.get("/api/live-markets/{market_id}/money-path")
+def live_money_path(market_id: str):
+    """Reviewed-evidence money-flow payload; no seeded allocations or scores."""
+    result = get_live_tab_projection().money_path(market_id)
+    if not result:
+        raise HTTPException(404, "Market not found")
+    return result
+
+
+@app.get("/api/live-markets/{market_id}/pain-graph")
+def live_pain_graph(market_id: str):
+    """Reviewed-evidence pain payload; values remain absent until computed."""
+    result = get_live_tab_projection().pain_graph(market_id)
+    if not result:
+        raise HTTPException(404, "Market not found")
+    return result
+
+
+@app.get("/api/live-market-graph")
+def live_market_graph():
+    """Taxonomy and reviewed-evidence graph that excludes demonstration profiles."""
+    return get_live_tab_projection().market_graph()
 
 
 @app.get("/api/markets")

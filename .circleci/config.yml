@@ -29,6 +29,9 @@ jobs:
           name: Verify reviewed-evidence live dashboard projection
           command: PYTHONPATH=. python scripts/smoke_live_projection.py
       - run:
+          name: Verify reviewed-evidence market tabs
+          command: PYTHONPATH=. python scripts/smoke_live_tabs.py && PYTHONPATH=. python scripts/smoke_live_tab_api.py
+      - run:
           name: Run Core Intelligence and MCP smoke tests
           command: PYTHONPATH=. python scripts/smoke_core_mcp.py && PYTHONPATH=. python scripts/smoke_mcp_server.py
 
