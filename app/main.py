@@ -13,6 +13,7 @@ from .evidence_engine import get_evidence_engine
 from .graph import GraphWriter
 from .idea_research import get_idea_research
 from .llm_enrichment import get_llm_enricher
+from .live_projection import get_live_market_projection
 from .validator import get_candidate_validator
 from .market import get_market_intelligence
 from .metrics_engine import get_metrics_engine
@@ -87,6 +88,12 @@ def home():
 def dashboard():
     """Homepage scorecard based only on the stored market-signal profiles."""
     return get_market_intelligence().dashboard()
+
+
+@app.get("/api/live-dashboard")
+def live_dashboard():
+    """Landing-page projection using reviewed evidence and computed metrics only."""
+    return get_live_market_projection().dashboard()
 
 
 @app.get("/api/markets")
