@@ -33,6 +33,9 @@ jobs:
           name: Run staged evidence-pipeline smoke test
           command: PYTHONPATH=. python scripts/smoke_staged_pipeline.py
       - run:
+          name: Verify reviewed-evidence live dashboard projection
+          command: PYTHONPATH=. python scripts/smoke_live_projection.py
+      - run:
           name: Run Core Intelligence and MCP smoke tests
           command: PYTHONPATH=. python scripts/smoke_core_mcp.py && PYTHONPATH=. python scripts/smoke_mcp_server.py
 
