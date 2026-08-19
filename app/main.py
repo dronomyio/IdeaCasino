@@ -57,6 +57,12 @@ class DirectCollectionRequest(BaseModel):
     targets: list[dict] | None = None
 
 
+class CikResolutionRequest(BaseModel):
+    company: str = Field(default="", max_length=240)
+    ticker: str | None = Field(default=None, max_length=16)
+    limit: int = Field(default=10, ge=1, le=25)
+
+
 class LLMEnrichmentRequest(BaseModel):
     evidence_ids: list[str] | None = None
     limit: int | None = Field(default=None, ge=1, le=100)
@@ -291,6 +297,21 @@ def direct_collectors_collect(payload: DirectCollectionRequest):
         return get_direct_collectors().collect(payload.collector, payload.max_results, payload.targets)
     except Exception as exc:
         raise HTTPException(503, f"Direct collection unavailable: {exc}") from exc
+
+
+@app.post("/api/sec-edgar/resolve-cik")
+def resolve_sec_cik(payload: CikResolutionRequest):
+    """Resolve a name or ticker using the SEC's official company ticker map.
+
+    Only exact results are selected automatically; ambiguous candidates are returned for
+    operator confirmation and are never collected implicitly.
+    """
+    try:
+        return get_direct_collectors().resolve_cik(payload.company, payload.ticker, payload.limit)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(503, f"SEC CIK resolution unavailable: {exc}") from exc
 
 
 @app.post("/api/evidence/llm-enrich")
